@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace AoC2022
+﻿namespace AoC2022
 {
     class Program
     {
-        public static string? _input;
-        public static List<string>? entries;
-        static void Main(string[] args)
+        public static string _input = "";
+        public static List<string> entries = new List<string>();
+        static void Main()
         {
             _input = File.ReadAllText("Input.txt");
             entries = _input.Split("\r\n").ToList();
