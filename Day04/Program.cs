@@ -19,7 +19,7 @@
             {
                 if(IsFullOverlap(l)) overlaps++;
             }
-            Console.WriteLine("Count of overlapping shifts is " + overlaps);
+            Console.WriteLine("Count of overlapping assignments is " + overlaps);
         }
 
         static void Part2()
@@ -29,7 +29,7 @@
             {
                 if(IsPartialOverlap(l)) overlaps++;
             }
-            Console.WriteLine("Count of overlapping shifts is " + overlaps);
+            Console.WriteLine("Count of overlapping assignments is " + overlaps);
         }
         static bool IsFullOverlap(string l)
         {
