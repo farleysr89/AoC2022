@@ -14,10 +14,34 @@
 
         static void Part1()
         {
+            var buffer = entries[0];
+            var result = 0;
+            for(var i = 0; i < buffer.Length - 3; i++)
+            {
+                var marker = buffer[i..(i+4)];
+                if(marker.Distinct().Count() == 4)
+                {
+                    result = i + 4;
+                    break;
+                }
+            }
+            Console.WriteLine("Marker ends at " + result);
         }
 
         static void Part2()
         {
+            var buffer = entries[0];
+            var result = 0;
+            for (var i = 0; i < buffer.Length - 13; i++)
+            {
+                var marker = buffer[i..(i + 14)];
+                if (marker.Distinct().Count() == 14)
+                {
+                    result = i + 14;
+                    break;
+                }
+            }
+            Console.WriteLine("Marker ends at " + result);
         }
     }
 }
