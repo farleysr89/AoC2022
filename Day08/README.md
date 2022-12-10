@@ -71,3 +71,5 @@ Looking right, its view is blocked at 2 trees (by a massive tree of height 9).
 This tree's scenic score is 8 (2 * 2 * 1 * 2); this is the ideal spot for the tree house.
 
 Consider each tree on your map. What is the highest scenic score possible for any tree?
+
+Your puzzle answer was 672280.
