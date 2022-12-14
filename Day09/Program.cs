@@ -115,6 +115,47 @@
 
         static void Part2()
         {
+            locations = new()
+            {
+                new Location
+                {
+                    X = 0,
+                    Y = 0
+                }
+            };
+            var tailCount = 9;
+            var head = new Knot();
+            var tmp = head;
+            for(int i = 0; i < tailCount; i++)
+            {
+                var tmpNew = new Knot
+                {
+                    Parent= tmp,
+                    Index = i + 1
+                };
+                tmp.Child = tmpNew;
+                tmp = tmpNew;
+            }
+
+            foreach(var entry in entries)
+            {
+                var parts = entry.Split(" ");
+                var moves = int.Parse(parts[1]);
+                switch (parts[0][0])
+                {
+                    case 'R':
+                        break;
+                    case 'L':
+                        break;
+                    case 'U':
+                        break;
+                    case 'D':
+                        break;
+                    default:
+                        Console.Error.WriteLine("Something Broke!");
+                        return;
+                }
+            }
         }
     }
 
@@ -123,5 +164,51 @@
         public int X;
         public int Y;
         public int VisitCount = 1;
+    }
+    internal class Knot
+    {
+        public int X = 0;
+        public int Y = 0;
+        public Knot? Parent = null;
+        public Knot? Child = null;
+        public int Index = 0;
+
+        public Location Move(int x, int y)
+        {
+            X += x;
+            Y += y;
+            return Child?.Follow();
+        }
+        public Location Follow()
+        {
+            if(Math.Abs(Parent.X - X) + Math.Abs(Parent.Y - Y) > 1)
+            {
+                if(Parent.X - X == 2)
+                {
+                    X++;
+                }
+                else if(Parent.Y - Y == 2)
+                {
+                    Y++;
+                }
+                else if(X - Parent.X == 2)
+                {
+                    X--;
+                }
+                else if(Y - Parent.Y == 2)
+                {
+                    Y--;
+                }
+                else
+                {
+                    if(X > Parent.X) X--;
+                    else X++;
+                    if(Y > Parent.Y) Y--;
+                    else Y++;
+                }
+                if(Child != null) return Child.Follow();
+            }
+            return null;
+        }
     }
 }
