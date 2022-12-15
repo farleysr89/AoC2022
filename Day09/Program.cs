@@ -136,26 +136,72 @@
                 tmp.Child = tmpNew;
                 tmp = tmpNew;
             }
-
+            //Console.WriteLine("---------------------");
             foreach(var entry in entries)
             {
+                //Console.WriteLine(entry);
                 var parts = entry.Split(" ");
                 var moves = int.Parse(parts[1]);
                 switch (parts[0][0])
                 {
                     case 'R':
+                        for(int i = 0; i < moves; i++)
+                        {
+                            var loc = head.Move(1, 0);
+                            if(loc == null) continue;
+                            if(!locations.Any(l => l.X == loc.X && l.Y == loc.Y))
+                            {
+                                locations.Add(loc);
+                            }
+                        }
                         break;
                     case 'L':
+                        for(int i = 0; i < moves; i++)
+                        {
+                            var loc = head.Move(-1, 0);
+                            if(loc == null) continue;
+                            if(!locations.Any(l => l.X == loc.X && l.Y == loc.Y))
+                            {
+                                locations.Add(loc);
+                            }
+                        }
                         break;
                     case 'U':
+                        for(int i = 0; i < moves; i++)
+                        {
+                            var loc = head.Move(0, 1);
+                            if(loc == null) continue;
+                            if(!locations.Any(l => l.X == loc.X && l.Y == loc.Y))
+                            {
+                                locations.Add(loc);
+                            }
+                        }
                         break;
                     case 'D':
+                        for(int i = 0; i < moves; i++)
+                        {
+                            var loc = head.Move(0, -1);
+                            if(loc == null) continue;
+                            if(!locations.Any(l => l.X == loc.X && l.Y == loc.Y))
+                            {
+                                locations.Add(loc);
+                            }
+                        }
                         break;
                     default:
                         Console.Error.WriteLine("Something Broke!");
                         return;
                 }
+                //var n = head;
+                //Console.WriteLine("({0},{1})", n.X, n.Y);
+                //while (n.Child != null)
+                //{
+                //    n = n.Child;
+                //    Console.WriteLine("({0},{1})", n.X, n.Y);
+                //}
+                //Console.WriteLine("-------------------------------");
             }
+            Console.WriteLine("Last knot visits {0} locations", locations.Count);
         }
     }
 
@@ -173,41 +219,59 @@
         public Knot? Child = null;
         public int Index = 0;
 
-        public Location Move(int x, int y)
+        public Location? Move(int x, int y)
         {
             X += x;
             Y += y;
             return Child?.Follow();
         }
-        public Location Follow()
+        public Location? Follow()
         {
-            if(Math.Abs(Parent.X - X) + Math.Abs(Parent.Y - Y) > 1)
+            var tmpX = X;
+            var tmpY = Y;
+            if(Parent.X == X && Parent.Y == Y) return null;
+            if(Parent.X == X && Math.Abs(Parent.Y - Y) == 1) return null;
+            if(Parent.Y == Y && Math.Abs(Parent.X - X) == 1) return null;
+            if(Math.Abs(Parent.X - X) == 1 && Math.Abs(Parent.Y - Y) == 1) return null;
+            //{
+            if(Index == 6)
             {
-                if(Parent.X - X == 2)
+                var x = 0;
+            }
+                if(Parent.X == X)
                 {
-                    X++;
+                    if (Y > Parent.Y) tmpY--;
+                    else tmpY++;
                 }
-                else if(Parent.Y - Y == 2)
+                else if(Parent.Y == Y)
                 {
-                    Y++;
+                    if (X > Parent.X) tmpX--;
+                    else tmpX++;
                 }
-                else if(X - Parent.X == 2)
-                {
-                    X--;
-                }
-                else if(Y - Parent.Y == 2)
-                {
-                    Y--;
-                }
+                //if(X - Parent.X == 2)
+                //{
+                //    tmpX--;
+                //}
+                //if(Y - Parent.Y == 2)
+                //{
+                //    tmpY--;
+                //}
                 else
                 {
-                    if(X > Parent.X) X--;
-                    else X++;
-                    if(Y > Parent.Y) Y--;
-                    else Y++;
+                    if (X > Parent.X) tmpX--;
+                    else tmpX++;
+                    if (Y > Parent.Y) tmpY--;
+                    else tmpY++;
                 }
+                X = tmpX;
+                Y = tmpY;
                 if(Child != null) return Child.Follow();
-            }
+                else return new Location
+                {
+                    X = X,
+                    Y = Y,
+                };
+            //}
             return null;
         }
     }
