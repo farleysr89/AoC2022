@@ -78,11 +78,12 @@ namespace AoC2022
                 var output = "";
                 for(var i = 1 + j * 40; i <= (j + 1) * 40; i++)
                 {
-                    output += SignalStrengths[i] == i - 1 || SignalStrengths[i] == i || SignalStrengths[i] == i - 2 ? '#' : '.';
+                    var k = i % 40;
+                    if (k == 0) k = 40;
+                    output += SignalStrengths[i] == k - 1 || SignalStrengths[i] == k || SignalStrengths[i] == k - 2 ? '#' : '.';
                 }
                 Console.WriteLine(output);
             }
-            //Console.WriteLine("Solution = {0}", (20 * SignalStrengths[20] + 60 * SignalStrengths[60] + 100 * SignalStrengths[100] + 140 * SignalStrengths[140] + 180 * SignalStrengths[180] + 220 * SignalStrengths[220]));
         }
     }
 }
