@@ -1,4 +1,6 @@
-﻿namespace AoC2022
+﻿using System.Net.WebSockets;
+
+namespace AoC2022
 {
     internal class Program
     {
@@ -14,10 +16,26 @@
 
         static void Part1()
         {
+            var valid = new List<int>();
+            var index = 0;
+            while (true)
+            {
+                var line = index * 3;
+                if(line > entries.Count()) break;
+                var item1 = entries[line];
+                var item2 = entries[line + 1];
+                index++;
+                
+            }
         }
 
         static void Part2()
         {
+        }
+
+        static bool IsValid(string item1, string item2)
+        {
+            return true;
         }
     }
 }

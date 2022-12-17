@@ -15,8 +15,6 @@
 
         static void Part1()
         {
-            var pos = 'a';
-            var dest = 'z';
             var y = 0;            
             foreach(var entry in entries)
             {
@@ -43,6 +41,29 @@
 
         static void Part2()
         {
+            locations = new();
+            var y = 0;            
+            foreach(var entry in entries)
+            {
+                var x = 0;
+                foreach(var c in entry)
+                {
+                    locations.Add(new Location
+                    {
+                        X = x,
+                        Y = y,
+                        Height = c == 'S' ? 'a' : c == 'E' ? 'z' : c,
+                        Start = c == 'S',
+                        End = c == 'E'
+                    });
+                    x++;
+                }
+                y++;
+            }
+            var start = locations.First(l => l.Start);
+            var end = locations.First(l => l.End);
+            end.MoveReverse(0);
+            Console.WriteLine("Shortest Distance = " + locations.Where(l=>l.Height == 'a' && l.ShortestDistance > -1).OrderBy(l => l.ShortestDistance).First().ShortestDistance);
         }
 
         internal class Location
@@ -83,6 +104,38 @@
                 {
                     if(loc.Height <= Height+ 1)
                         loc.Move(moves);
+                }
+            }
+
+            public void MoveReverse(int moves)
+            {
+                if(ShortestDistance == -1 || moves < ShortestDistance) ShortestDistance = moves;
+                else return;
+                if(Height == 'a') return;
+                moves++;
+                var loc = locations.FirstOrDefault(l => l.X == X - 1 && l.Y == Y);
+                if(loc != null)
+                {
+                    if(loc.Height >= Height - 1)
+                        loc.MoveReverse(moves);
+                }
+                loc = locations.FirstOrDefault(l => l.X == X + 1 && l.Y == Y);
+                if(loc != null)
+                {
+                    if(loc.Height >= Height - 1)
+                        loc.MoveReverse(moves);
+                }
+                loc = locations.FirstOrDefault(l => l.X == X && l.Y == Y - 1);
+                if(loc != null)
+                {
+                    if(loc.Height >= Height - 1)
+                        loc.MoveReverse(moves);
+                }
+                loc = locations.FirstOrDefault(l => l.X == X && l.Y == Y + 1);
+                if(loc != null)
+                {
+                    if(loc.Height >= Height - 1)
+                        loc.MoveReverse(moves);
                 }
             }
         }
