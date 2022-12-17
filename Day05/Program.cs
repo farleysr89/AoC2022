@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AoC2022
+﻿namespace AoC2022
 {
     internal class Program
     {

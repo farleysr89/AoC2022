@@ -1,6 +1,4 @@
-﻿using System.Net.WebSockets;
-
-namespace AoC2022
+﻿namespace AoC2022
 {
     internal class Program
     {
@@ -21,7 +19,7 @@ namespace AoC2022
             while (true)
             {
                 var line = index * 3;
-                if(line > entries.Count()) break;
+                if(line > entries.Count) break;
                 var item1 = entries[line];
                 var item2 = entries[line + 1];
                 index++;

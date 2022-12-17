@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Reflection.PortableExecutable;
-
-namespace AoC2022
+﻿namespace AoC2022
 {
     internal class Program
     {

@@ -1,6 +1,4 @@
-﻿using System.Net.WebSockets;
-
-namespace AoC2022
+﻿namespace AoC2022
 {
     internal class Program
     {
