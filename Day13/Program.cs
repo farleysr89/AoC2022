@@ -6,7 +6,8 @@
         public static List<string> entries = new();
         static void Main()
         {
-            _input = File.ReadAllText("Input.txt");
+            _input = File.ReadAllText("SampleCase.txt");
+            // 31 - 43
             entries = _input.Split("\r\n").ToList();
             Part1();
             Part2();
@@ -27,7 +28,7 @@
                 //if (IsValid(item1[1..(item1.Length - 1)], item2[1..(item2.Length - 1)])) valid.Add(index + 1);
                 var con1 = Convert(item1);
                 var con2 = Convert(item2);
-                if(IsValid(con1,con2)) valid.Add(index + 1);
+                if(IsValid(con1,con2) != Result.Invalid) valid.Add(index + 1);
                 index++;
 
             }
@@ -65,22 +66,24 @@
             }
             return true;
         }
-        static bool IsValid(List<object> list1, List<object> list2)
+        static Result IsValid(List<object> list1, List<object> list2)
         {
             for (var i = 0; i < list1.Count; i++)
             {
-                if(i >= list2.Count) return false;
+                if(i >= list2.Count) return Result.Invalid;
                 if (list1[i].GetType() == typeof(int))
                 {
                     if (list2[i].GetType() == typeof(int))
                     {
-                        if ((int)list1[i] > (int)list2[i]) return false;
-                        else if ((int)list1[i] < (int)list2[i]) return true;
+                        if ((int)list1[i] > (int)list2[i]) return Result.Invalid;
+                        else if ((int)list1[i] < (int)list2[i]) return Result.Valid;
                     }
                     else if (list2[i].GetType() == typeof(List<object>))
                     {
                         var tmp = new List<object> { list1[i] };
-                        return IsValid(tmp, (List<object>)list2[i]);
+                        var tmpR = IsValid(tmp, (List<object>)list2[i]);
+                        if(tmpR == Result.Continue) continue;
+                        return tmpR;
                     }
                     else
                     {
@@ -92,11 +95,15 @@
                     if (list2[i].GetType() == typeof(int))
                     {
                         var tmp = new List<object> { list2[i] };
-                        return IsValid((List<object>)list1[i], tmp);
+                        var tmpR = IsValid((List<object>)list1[i], tmp);
+                        if(tmpR == Result.Continue) continue;
+                        return tmpR;
                     }
                     else if (list2[i].GetType() == typeof(List<object>))
                     {
-                        return IsValid((List<object>)list1[i], (List<object>)list2[i]);
+                        var tmpR = IsValid((List<object>)list1[i], (List<object>)list2[i]);
+                        if(tmpR == Result.Continue) continue;
+                        return tmpR;
                     }
                     else
                     {
@@ -108,7 +115,7 @@
                     Console.WriteLine("Something Broke!");
                 }
             }
-            return true;
+            return Result.Continue;
         }
 
         public static List<object> Convert(string list)
@@ -146,5 +153,12 @@
             if (tmp != "") objects.Add(int.Parse(tmp));
             return objects;
         }
+    }
+
+    internal enum Result
+    {
+        Valid,
+        Invalid,
+        Continue
     }
 }
