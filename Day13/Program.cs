@@ -6,8 +6,10 @@
         public static List<string> entries = new();
         static void Main()
         {
-            _input = File.ReadAllText("SampleCase.txt");
-            // 31 - 43
+            _input = File.ReadAllText("SampleInput.txt");
+            // 43
+
+            // 5871
             entries = _input.Split("\r\n").ToList();
             Part1();
             Part2();
@@ -115,7 +117,7 @@
                     Console.WriteLine("Something Broke!");
                 }
             }
-            return Result.Continue;
+            return list1.Count == list2.Count ? Result.Continue : Result.Valid;
         }
 
         public static List<object> Convert(string list)
