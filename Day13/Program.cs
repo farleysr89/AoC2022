@@ -7,7 +7,7 @@
         static void Main()
         {
             _input = File.ReadAllText("SampleInput.txt");
-            // 43
+            // 1062
 
             // 5871
             entries = _input.Split("\r\n").ToList();
