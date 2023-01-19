@@ -6,10 +6,7 @@
         public static List<string> entries = new();
         static void Main()
         {
-            _input = File.ReadAllText("SampleInput.txt");
-            // 43
-
-            // 5871
+            _input = File.ReadAllText("Input.txt");
             entries = _input.Split("\r\n").ToList();
             Part1();
             Part2();
@@ -27,7 +24,6 @@
 
                 var item1 = entries[line];
                 var item2 = entries[line + 1];
-                //if (IsValid(item1[1..(item1.Length - 1)], item2[1..(item2.Length - 1)])) valid.Add(index + 1);
                 var con1 = Convert(item1);
                 var con2 = Convert(item2);
                 if(IsValid(con1,con2) != Result.Invalid) valid.Add(index + 1);
@@ -41,33 +37,6 @@
         {
         }
 
-        static bool IsValid(string item1, string item2)
-        {
-            var parts1 = item1.Split(",");
-            var parts2 = item2.Split(",");
-            for (var i = 0; i < parts1.Length; i++)
-            {
-                if (int.TryParse(parts1[i], out var value1))
-                {
-                    if (parts2.Length <= i) return false;
-                    if (int.TryParse(parts2[i], out var value2))
-                    {
-                        if (value1 > value2) return false;
-                    }
-                    else if (parts2[i][0] == '[')
-                    {
-                        //var p2 = parts2[1..parts2.inde];
-                        //if(!IsValid(parts1[i],p2[1..(p2.IndexOf(']') - 1)])) return false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Something Broke!");
-                    }
-                }
-
-            }
-            return true;
-        }
         static Result IsValid(List<object> list1, List<object> list2)
         {
             for (var i = 0; i < list1.Count; i++)
